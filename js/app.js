@@ -38,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var ctx = canvas.getContext('2d');
     var shapeTypeSel = document.getElementById('shape-type');
     var factoryFn;
+    var shapeType;
 
     shapeTypeSel.innerHTML = '';
     _.forEach(_shapeTypes, function(value, key) {
@@ -51,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     shapeTypeSel.addEventListener('change', function() {
         factoryFn = _shapeTypes[this.value];
+        shapeType = this.value;
     });
 
     canvas.addEventListener('mousedown', function(evt) {
@@ -58,8 +60,10 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        var fillStyle = '#' + Math.floor(Math.random()*16777215).toString(16);
+
         var shape = factoryFn(evt.clientX - canvas.offsetLeft, evt.clientY - canvas.offsetTop, 10, 10, {
-            fillStyle: '#' + Math.floor(Math.random()*16777215).toString(16),
+            fillStyle: fillStyle,
             strokeStyle: '#000000'
         });
 
